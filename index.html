@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>張淑秋 | 個人形象官網</title>
+    <!-- 引入 Google 字型 (Noto Sans TC) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* CSS 變數：日系質感大地色系主題 */
+        :root {
+            --bg-color: #F8F6F0;
+            /* 溫暖柔和的米白底色 */
+            --card-bg: #FFFFFF;
+            /* 卡片純白背景 */
+            --text-main: #2C2C2C;
+            /* 主文字：深灰（非死黑） */
+            --text-sub: #7A7670;
+            /* 次要文字：柔和灰棕 */
+            --accent-color: #9E8A78;
+            /* 日系拿鐵棕/灰卡其色作為點綴 */
+            --accent-light: #F2ECE4;
+            /* 區塊的淺色背景 */
+            --border-radius: 16px;
+            /* 柔和圓角 */
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 30px 20px;
+            line-height: 1.9;
+            letter-spacing: 0.06em;
+        }
+
+        /* 頂部導覽列 (分頁切換按鈕隱藏式 Radio 技巧) */
+        .nav-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 16px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-sub);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-main);
+        }
+
+        /* 隱藏 Radio 按鈕 */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* 主容器：寬度設為 920px 減少兩側留白 */
+        .main-container {
+            width: 100%;
+            max-width: 1350px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            position: relative;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 頁面內容區塊：預設隱藏 */
+        .page {
+            display: none;
+            padding: 15px;
+            animation: fadeIn 0.6s ease forwards;
+            flex: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 透過 CSS 選取器根據點選的分頁顯示對應頁面 */
+        #page1-radio:checked~.main-container #page1,
+        #page2-radio:checked~.main-container #page2,
+        #page3-radio:checked~.main-container #page3 {
+            display: block;
+        }
+
+        /* 導覽按鈕高亮狀態 */
+        #page1-radio:checked~.nav-container label[for="page1-radio"],
+        #page2-radio:checked~.nav-container label[for="page2-radio"],
+        #page3-radio:checked~.nav-container label[for="page3-radio"] {
+            background-color: var(--text-main);
+            color: #FFFFFF;
+        }
+
+        /* === 頁面一：首頁 / 關於我 === */
+        .banner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .banner-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .name {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 0.08em;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .bio {
+            font-size: 14px;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            text-align: center;
+            letter-spacing: 0.1em;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 2px;
+            background-color: var(--accent-color);
+            margin: 6px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .interest-item {
+            background-color: var(--accent-light);
+            border-radius: 12px;
+            padding: 18px 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .interest-item:hover {
+            background-color: #E8DFD3;
+        }
+
+        .interest-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .interest-name {
+            font-size: 13px;
+            color: var(--text-main);
+        }
+
+        /* === 頁面二：輪播作品集 (Carousel) === */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--accent-light);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .carousel-track-container {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .carousel-media-box {
+            width: 100%;
+            background-color: #EAE3D8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            max-height: 700px;
+            overflow: hidden;
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: auto;
+            max-height: 700px;
+            object-fit: contain;
+        }
+
+        .carousel-video {
+            width: 100%;
+            max-height: 800px;
+            object-fit: contain;
+            background-color: #000;
+        }
+
+        .carousel-info {
+            padding: 12px 20px;
+            width: 100%;
+            text-align: center;
+            background-color: var(--card-bg);
+        }
+
+        .carousel-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .carousel-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        /* 輪播左右切換按鈕 */
+        .carousel-btn {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.85);
+            color: var(--text-main);
+            border: none;
+            width: 40px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background-color: var(--text-main);
+            color: #FFFFFF;
+        }
+
+        .carousel-btn.prev {
+            left: 16px;
+        }
+
+        .carousel-btn.next {
+            right: 16px;
+        }
+
+        /* 輪播下方圓點導航 */
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 0;
+            background-color: var(--accent-light);
+        }
+
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #D6CEC3;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-indicator.active {
+            background-color: var(--text-main);
+            width: 24px;
+            border-radius: 6px;
+        }
+
+        /* 區塊分隔線與間距 */
+        .section-divider {
+            margin: 48px 0 36px 0;
+            border: none;
+            border-top: 1px dashed #131212;
+            width: 100%;
+        }
+
+        /* === 頁面三：聯絡我們 === */
+        .contact-container {
+            max-width: 1350px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .contact-desc {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-sub);
+            margin-bottom: 30px;
+        }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .contact-card {
+            background-color: var(--accent-light);
+            padding: 18px 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            background-color: #E8DFD3;
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .contact-value {
+            font-size: 15px;
+            color: var(--text-main);
+            font-weight: 500;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .contact-value:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            display: inline-block;
+            padding: 8px 18px;
+            border: 1px solid #E0DCD4;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: var(--transition);
+            background-color: #FFFFFF;
+        }
+
+        .social-btn:hover {
+            background-color: var(--text-main);
+            color: #FFFFFF;
+            border-color: var(--text-main);
+        }
+
+        /* 響應式微調 */
+        @media (max-width: 768px) {
+            .page {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 控制分頁切換的 Radio 按鈕 -->
+    <input type="radio" id="page1-radio" name="tabs" checked>
+    <input type="radio" id="page2-radio" name="tabs">
+    <input type="radio" id="page3-radio" name="tabs">
+
+    <!-- 頂部導覽列按鈕 -->
+    <div class="nav-container">
+        <label for="page1-radio" class="nav-btn">關於我</label>
+        <label for="page2-radio" class="nav-btn">精選作品</label>
+        <label for="page3-radio" class="nav-btn">聯絡諮詢</label>
+    </div>
+
+    <!-- 主頁面容器 -->
+    <div class="main-container">
+
+        <!-- 頁面一：關於我 (Home / About) -->
+        <div id="page1" class="page">
+            <div class="banner-container">
+                <img src="./img/大頭照2.jpg" alt="形象照片" class="banner-img">
+            </div>
+
+            <div class="profile-header">
+                <h1 class="name">張淑秋</h1>
+                <p class="subtitle">品管/行政人員/影片剪輯師/網頁小編</p>
+
+            </div>
+            <div style="margin-top: 30px;">
+                <h2 class="section-title">個人簡歷 / PDF 檔案</h2>
+
+                <div
+                    style="background-color: var(--accent-light); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center;">
+                    <!-- PDF 嵌入預覽區塊（電腦瀏覽時可直接看） -->
+                    <object data="./pdf/The_Growth_Journal.pdf" type="application/pdf" width="100%" height="600px"
+                        style="border-radius: 8px; border: 1px solid #E0DCD4; display: block; background: #fff;">
+                        <!-- 如果瀏覽器不支援直接預覽（例如部分手機），會顯示這段備用內容 -->
+                        <div style="padding: 30px 10px;">
+                            <p style="font-size: 14px; color: var(--text-sub); margin-bottom: 10px;">您的瀏覽器未啟用直接預覽 PDF 功能
+                            </p>
+                        </div>
+                    </object>
+
+                    <!-- 下載/在新分頁開啟按鈕 -->
+                    <div style="margin-top: 12px;">
+                        <a href="./pdf/The_Growth_Journal.pdf" target="_blank" download class="social-btn"
+                            style="display: inline-block; background-color: var(--text-main); color: #fff; border-color: var(--text-main); font-weight: 500;">
+                            📄 開啟 / 下載完整 PDF 檔案
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h2 class="section-title">核心興趣</h2>
+                <div class="interests-grid">
+                    <div class="interest-item">
+                        <span class="interest-icon">🎞️</span>
+                        <span class="interest-name">影音剪輯</span>
+                    </div>
+                    <div class="interest-item">
+                        <span class="interest-icon">🎶</span>
+                        <span class="interest-name">音樂欣賞</span>
+                    </div>
+                    <div class="interest-item">
+                        <span class="interest-icon">💻</span>
+                        <span class="interest-name">影片觀賞</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面二：精選作品輪播 (Carousel Portfolio) -->
+        <div id="page2" class="page">
+            <div class="profile-header" style="margin-bottom: 24px;">
+                <h1 class="name">精選作品集</h1>
+                <p class="subtitle">Selected Works </p>
+            </div>
+
+            <div class="carousel-wrapper">
+                <!-- 左右切換按鈕 -->
+                <button class="carousel-btn prev" onclick="moveSlide(-1)">❮</button>
+                <button class="carousel-btn next" onclick="moveSlide(1)">❯</button>
+
+                <!-- 輪播內容軌道 -->
+                <div class="carousel-track-container">
+                    <div class="carousel-track" id="carouselTrack">
+
+                        <!-- 作品 1：橫幅圖片 -->
+                        <div class="carousel-slide">
+                            <div class="carousel-media-box">
+                                <img src="img/20261005作業1.png" alt="網頁橫幅製作" class="carousel-img">
+                            </div>
+                            <div class="carousel-info">
+                                <h3 class="carousel-title">網頁橫幅製作</h3>
+                                <p class="carousel-desc">使用PS漸層、填滿效果及遮罩片而成</p>
+                            </div>
+                        </div>
+
+                        <!-- 作品 2：動態圖 -->
+                        <div class="carousel-slide">
+                            <div class="carousel-media-box">
+                                <img src="img/動圖(桌-生氣).gif" alt="動畫製作" class="carousel-img">
+                            </div>
+                            <div class="carousel-info">
+                                <h3 class="carousel-title">動畫製作</h3>
+                                <p class="carousel-desc">使用PS製作動態圖</p>
+                            </div>
+                        </div>
+
+                        <!-- 作品 3：模板合成 -->
+                        <div class="carousel-slide">
+                            <div class="carousel-media-box">
+                                <img src="./img/練習20261012(合)-1.png" alt="模板合成" class="carousel-img">
+                            </div>
+                            <div class="carousel-info">
+                                <h3 class="carousel-title">模板合成</h3>
+                                <p class="carousel-desc">使用PS遮色片、鋼筆路徑製作而成的圖在套入模板而成</p>
+                            </div>
+                        </div>
+
+                        <!-- 作品 4：海報製作 -->
+                        <div class="carousel-slide">
+                            <div class="carousel-media-box">
+                                <img src="./img/20261015.gif" alt="海報製作" class="carousel-img">
+                            </div>
+                            <div class="carousel-info">
+                                <h3 class="carousel-title">海報製作</h3>
+                                <p class="carousel-desc">使用Illustrator向量、漸變工具製作而成</p>
+                            </div>
+                        </div>
+
+                        <!-- 作品 5：YouTube 影片 A -->
+                        <div class="carousel-slide">
+                            <div class="carousel-media-box" style="background-color: #000;">
+                                <!-- <iframe 
+                                    style="width: 100%; height: 350px; border: none;" 
+                                    src="https://youtu.be/Ou8Mm373t50?si=QYFXlmIrM65lPIy5" 
+                                    title="YouTube video player" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                                </iframe> -->
+                                <iframe width="560" height="315"
+                                    src="https://www.youtube.com/embed/Ou8Mm373t50?si=KH51AoWE2a8zptwp"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <div class="carousel-info">
+                                <h3 class="carousel-title">剪輯作品展示 A</h3>
+                                <p class="carousel-desc">使用 Premiere / canva 製作的動態影像剪輯與短片。</p>
+                            </div>
+                        </div>
+
+                        <!-- 作品 6：YouTube 影片 B -->
+                        <div class="carousel-slide">
+                            <div class="carousel-media-box" style="background-color: #000;">
+                                <!-- <iframe style="width: 100%; height: 350px; border: none;"
+                                    src="https://youtu.be/efeuyr0kz-k?si=_FI5p6grR5seo2ky" title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen>
+                                </iframe> -->
+
+                                <iframe width="560" height="315"
+                                    src="https://www.youtube.com/embed/efeuyr0kz-k?si=KCYcbzOfQfIhshrY"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <div class="carousel-info">
+                                <h3 class="carousel-title">剪輯作品展示 B</h3>
+                                <p class="carousel-desc">使用 Premiere / canva 製作的動態影像剪輯與短片。</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- 下方小圓點指示器 -->
+                    <div class="carousel-nav" id="carouselNav">
+                        <!-- 圓點會由下方 JavaScript 動態產生 -->
+                    </div>
+
+                    <!-- 區塊分隔虛線與間距 -->
+                    <hr class="section-divider">
+
+                    <!-- 專案區塊（隔開後的下方區域） -->
+                    <div style="margin-top: 10px;">
+                        <div class="profile-header" style="margin-bottom: 24px;">
+                            <h1 class="name">"我們這桌"網路頻道專案</h1>
+                            <p class="subtitle">Projects</p>
+                        </div>
+                        <div
+                            style="background-color: var(--accent-light); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center;">
+                            <!-- PDF 嵌入預覽區塊（電腦瀏覽時可直接看） -->
+                            <object data="./pdf/yt.pdf" type="application/pdf" width="100%"
+                                height="450px"
+                                style="border-radius: 8px; border: 1px solid #E0DCD4; display: block; background: #fff;">
+                                <!-- 如果瀏覽器不支援直接預覽（例如部分手機），會顯示這段備用內容 -->
+                                <div style="padding: 30px 10px;">
+                                    <p style="font-size: 14px; color: var(--text-sub); margin-bottom: 10px;">
+                                        您的瀏覽器未啟用直接預覽 PDF 功能</p>
+                                </div>
+                            </object>
+
+                            <!-- 下載/在新分頁開啟按鈕 -->
+                            <div style="margin-top: 12px;">
+                                <a href="./pdf/yt.pdf" target="_blank" download class="social-btn"
+                                    style="display: inline-block; background-color: var(--text-main); color: #fff; border-color: var(--text-main); font-weight: 500;">
+                                    📄 開啟 / 下載完整 PDF 檔案
+                                </a>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/@OurTable0685" class="social-btn" target="_blank">YouTube</a>
+                        <a href="https://www.facebook.com/OurTable0685/" class="social-btn" target="_blank">Facebook</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 頁面三：聯絡我們 (Contact) -->
+        <div id="page3" class="page">
+            <div class="profile-header" style="margin-bottom: 20px;">
+                <h1 class="name">與我聯繫</h1>
+                <p class="subtitle">Contact Information</p>
+            </div>
+
+            <div class="contact-container">
+                <p class="contact-desc">
+                    歡迎透過以下聯絡方式與我取得聯繫，不論是專案合作、工作邀約或交流討論都很歡迎！
+                </p>
+
+                <div class="contact-info-list">
+                    <div class="contact-card">
+                        <div class="contact-icon">👤</div>
+                        <div class="contact-details">
+                            <span class="contact-label">聯絡人 / Name</span>
+                            <span class="contact-value">張淑秋</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <span class="contact-label">連絡電話 / Phone</span>
+                            <a href="tel:0912345678" class="contact-value">0917-***-***</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <span class="contact-label">電子信箱 / Email</span>
+                            <a href="mailto:email@example.com" class="contact-value">angel940184@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-links">
+
+                    <a href="https://www.facebook.com/angel.rocker.9/" class="social-btn" target="_blank">Facebook</a>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            let currentIndex = 0;
+            const track = document.getElementById('carouselTrack');
+            const slides = track ? track.children : [];
+            const navContainer = document.getElementById('carouselNav');
+
+            // 初始化產生下方導航小圓點
+            function initCarousel() {
+                if (!navContainer || slides.length === 0) return;
+                navContainer.innerHTML = '';
+                for (let i = 0; i < slides.length; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'carousel-indicator' + (i === 0 ? ' active' : '');
+                    btn.onclick = () => goToSlide(i);
+                    navContainer.appendChild(btn);
+                }
+            }
+
+            // 切換至指定的幻燈片
+            function goToSlide(index) {
+                if (index < 0) {
+                    currentIndex = slides.length - 1;
+                } else if (index >= slides.length) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex = index;
+                }
+
+                // 移動輪播軌道
+                track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+
+                // 更新小圓點狀態
+                const indicators = navContainer.children;
+                for (let i = 0; i < indicators.length; i++) {
+                    indicators[i].classList.toggle('active', i === currentIndex);
+                }
+            }
+
+            // 左右按鈕點擊觸發
+            function moveSlide(direction) {
+                goToSlide(currentIndex + direction);
+            }
+
+            // 頁面載入完成後初始化
+            window.onload = function () {
+                initCarousel();
+            };
+        </script>
+</body>
+
+</html>
